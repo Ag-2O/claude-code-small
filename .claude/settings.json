@@ -1,0 +1,77 @@
+{
+  "permissions": {
+    "read": [
+      {
+        "pattern": "**/.env*",
+        "allow": false,
+        "reason": "セキュリティ上の理由により、環境変数ファイルへのアクセスを禁止しています。"
+      }
+    ],
+    "edit": [
+      {
+        "pattern": "**/.env*",
+        "allow": false,
+        "reason": "環境変数ファイルの編集は許可されていません。"
+      }
+    ],
+    "write": [
+      {
+        "pattern": "**/.env*",
+        "allow": false,
+        "reason": "環境変数ファイルへの書き込みは許可されていません。"
+      }
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/run_python_hook.sh .claude/scripts/recorder/record_messages.py",
+            "statusMessage": "セッション履歴を記録中..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/run_python_hook.sh .claude/scripts/formatters/format_python.py",
+            "statusMessage": "Pythonコードをフォーマット中..."
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/run_python_hook.sh .claude/scripts/formatters/format_markdown.py",
+            "statusMessage": "Markdownをフォーマット中..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/run_python_hook.sh .claude/scripts/recorder/record_messages.py",
+            "statusMessage": "セッション履歴を記録中..."
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/run_python_hook.sh .claude/scripts/recorder/record_messages.py",
+            "statusMessage": "セッション履歴を記録中..."
+          }
+        ]
+      }
+    ]
+  }
+}

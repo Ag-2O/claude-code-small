@@ -1,0 +1,45 @@
+[project]
+name = "claude-code-small"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "google-cloud-bigquery>=3.41.0",
+    "google-cloud-storage>=3.10.1",
+    "tzdata>=2026.2",
+]
+
+[dependency-groups]
+dev = [
+    "mdformat",
+    "mdformat-gfm",
+    "mdformat-frontmatter",
+    "pymarkdownlnt",
+    "ruff",
+    "pytest",
+    "pytest-cov"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "B",
+    "BLE",
+    "D",
+    "E",
+    "F",
+    "I",
+    "PL",
+    "S",
+    "UP",
+]
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "double"

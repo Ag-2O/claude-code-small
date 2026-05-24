@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "hooks": {
+        "userPromptSubmitted": [
+            {
+                "type": "command",
+                "bash": "bash .claude/scripts/run_python_hook.sh .claude/scripts/recorder/record_messages.py",
+                "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File .claude/scripts/run_python_hook.ps1 -ScriptPath .claude/scripts/recorder/record_messages.py",
+                "timeoutSec": 10
+            }
+        ],
+        "sessionEnd": [
+            {
+                "type": "command",
+                "bash": "bash .claude/scripts/run_python_hook.sh .claude/scripts/recorder/record_messages.py",
+                "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File .claude/scripts/run_python_hook.ps1 -ScriptPath .claude/scripts/recorder/record_messages.py",
+                "timeoutSec": 10
+            }
+        ],
+        "postToolUse": [
+            {
+                "type": "command",
+                "bash": "bash .claude/scripts/run_python_hook.sh .claude/scripts/formatters/format_markdown.py",
+                "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File .claude/scripts/run_python_hook.ps1 -ScriptPath .claude/scripts/formatters/format_markdown.py",
+                "timeoutSec": 30
+            },
+            {
+                "type": "command",
+                "bash": "bash .claude/scripts/run_python_hook.sh .claude/scripts/formatters/format_python.py",
+                "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File .claude/scripts/run_python_hook.ps1 -ScriptPath .claude/scripts/formatters/format_python.py",
+                "timeoutSec": 30
+            }
+        ]
+    }
+}

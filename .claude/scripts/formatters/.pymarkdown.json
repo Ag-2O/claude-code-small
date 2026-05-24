@@ -1,0 +1,19 @@
+{
+  "plugins": {
+    "line-length": {
+      "enabled": true,
+      "line_length": 120
+    },
+    "md003": {
+      "style": "atx"
+    },
+    "md041": {
+      "enabled": false
+    }
+  },
+  "extensions": {
+    "front-matter": {
+      "enabled": true
+    }
+  }
+}
