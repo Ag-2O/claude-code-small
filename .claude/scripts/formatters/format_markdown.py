@@ -91,7 +91,7 @@ def _format_markdown_file(file_path: str) -> tuple[int, str]:
     Returns:
         A tuple of (exit_code, violations) where exit_code is 0 on success or
         2 if pymarkdown scan reports remaining violations, and violations is the
-        pymarkdown stdout output (empty string on success).
+        combined diagnostic output forwarded to stderr (empty string on success).
 
     """
     exit_code = 0
@@ -122,12 +122,38 @@ def _format_markdown_file(file_path: str) -> tuple[int, str]:
         check=False,
         text=True,
     )
-    if result.returncode != 0 and result.stdout.strip():
-        violations = result.stdout.strip()
-        print(violations)
+    if result.returncode != 0:
+        violations = _format_diagnostics(result.stdout, result.stderr, file_path)
+        print(violations, file=sys.stderr)
         exit_code = 2
 
     return exit_code, violations
+
+
+def _format_diagnostics(stdout: str, stderr: str, file_path: str) -> str:
+    """Combine subprocess stdout and stderr into a single diagnostic block.
+
+    Args:
+        stdout: Captured stdout from the failed subprocess.
+        stderr: Captured stderr from the failed subprocess.
+        file_path: The Markdown file being checked.
+
+    Returns:
+        A non-empty string describing the failure. When both streams are empty
+        the function returns a synthetic notice that names the file, so the
+        hook never blocks silently.
+
+    """
+    stdout_text = stdout.strip()
+    stderr_text = stderr.strip()
+    parts: list[str] = []
+    if stdout_text:
+        parts.append(stdout_text)
+    if stderr_text:
+        parts.append(stderr_text)
+    if not parts:
+        return f"pymarkdown scan failed for {file_path} (no diagnostic output)"
+    return "\n".join(parts)
 
 
 def main() -> int:

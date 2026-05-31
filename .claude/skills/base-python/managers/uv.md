@@ -49,29 +49,3 @@ uv sync
 ```bash
 uv add --dev ruff pytest pytest-cov
 ```
-
-## 開発ツールの設定
-
-各ツールの設定を `pyproject.toml` に追加する。
-
-```toml
-[tool.pytest.ini_options]
-pythonpath = [
-  "src",              # ソースコードのルートディレクトリ
-]
-
-[tool.ruff]
-line-length = 88      # 最大行長（プロジェクトのスタイルに合わせて調整する）
-
-[tool.ruff.lint]
-select = [
-  "E",                # PEP 8 スタイルエラー
-  "F",                # flake8 互換エラー
-  "S",                # bandit 互換セキュリティエラー
-  "I",                # isort 互換インポート順序エラー
-]
-
-[tool.ruff.format]
-indent-style = "space"  # スペースでインデントする
-quote-style = "double"  # 文字列にはダブルクォートを使う
-```

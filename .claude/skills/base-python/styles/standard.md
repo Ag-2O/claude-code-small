@@ -37,13 +37,8 @@ logging.basicConfig(
 Python では条件チェックより例外処理を好む。
 
 ```python
-from typing import TypeVar
-
-T = TypeVar("T")
-
-
-# 良い例: EAFP スタイル（Pythonic）
-def get_value(dictionary: dict[str, T], key: str, default: T) -> T:
+# 良い例: EAFP スタイル（Pythonic）。型パラメータは PEP 695 構文で書く（3.12+）
+def get_value[T](dictionary: dict[str, T], key: str, default: T) -> T:
     """Get a value from a dictionary with a default fallback."""
     try:
         return dictionary[key]
@@ -53,7 +48,7 @@ def get_value(dictionary: dict[str, T], key: str, default: T) -> T:
 
 ## 型ヒント
 
-### 基本的な型アノテーション（Python 3.11+）
+### 基本的な型アノテーション
 
 ```python
 def process_user(
@@ -67,17 +62,14 @@ def process_user(
     return User(user_id, name)
 ```
 
-### 型エイリアスと TypeVar
+### 型エイリアスとジェネリック（PEP 695）
 
 ```python
-from typing import TypeVar
-
-JSON = dict[str, "JSON"] | list["JSON"] | str | int | float | bool | None
-
-T = TypeVar("T")
+# 型エイリアスは type 文（3.12+）で定義する。再帰参照もそのまま書ける
+type JSON = dict[str, JSON] | list[JSON] | str | int | float | bool | None
 
 
-def first(items: list[T]) -> T | None:
+def first[T](items: list[T]) -> T | None:
     """Return the first item or None if list is empty."""
     return items[0] if items else None
 ```
@@ -227,44 +219,21 @@ class Point(NamedTuple):
 import functools
 import time
 from collections.abc import Callable
-from typing import TypeVar
-
-F = TypeVar("F", bound=Callable[..., object])
 
 
-def timer(func: F) -> F:
+# ParamSpec で引数シグネチャを保持する（3.10+）。type: ignore は不要
+def timer[**P, R](func: Callable[P, R]) -> Callable[P, R]:
     """Decorator to time function execution."""
 
     @functools.wraps(func)
-    def wrapper(*args: object, **kwargs: object) -> object:
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         start = time.perf_counter()
         result = func(*args, **kwargs)
         elapsed = time.perf_counter() - start
         print(f"{func.__name__} took {elapsed:.4f}s")
         return result
 
-    return wrapper  # type: ignore[return-value]
-```
-
-## アンチパターン
-
-```python
-# 悪い例: ミュータブルなデフォルト引数
-def append_to(item: str, items: list[str] = []) -> list[str]: ...
-
-# 良い例
-def append_to(item: str, items: list[str] | None = None) -> list[str]:
-    """Append item to the list, creating a new one if not provided."""
-    if items is None:
-        items = []
-    items.append(item)
-    return items
-
-
-# 悪い例: 型チェックに type() を使う — isinstance() を使う
-# 悪い例: None を == で比較する — is を使う
-# 悪い例: from module import * — 明示的なインポートを使う
-# 悪い例: 裸の except — 具体的な例外をキャッチする
+    return wrapper
 ```
 
 ## ツールの実行

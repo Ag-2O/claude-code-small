@@ -2,12 +2,19 @@
   "plugins": {
     "line-length": {
       "enabled": true,
-      "line_length": 120
+      "line_length": 120,
+      "code_block_line_length": 120
     },
     "md003": {
       "style": "atx"
     },
+    "md024": {
+      "siblings_only": true
+    },
     "md041": {
+      "enabled": false
+    },
+    "md033": {
       "enabled": false
     }
   },

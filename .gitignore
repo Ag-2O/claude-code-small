@@ -5,9 +5,15 @@ build/
 dist/
 wheels/
 *.egg-info
-
-# Virtual environments
+.ruff_cache
+.coverage
+.pytest_cache
 .venv
 uv.lock
-.ruff_cache
-.claude/.works
+
+# AI Agent-generated files
+.artifacts/
+.claude/.works/
+
+# Local files
+.local/

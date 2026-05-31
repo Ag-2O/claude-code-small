@@ -31,6 +31,9 @@ def user_service(mock_api_client: MagicMock) -> UserService:
 ### セットアップとティアダウン付きフィクスチャ
 
 ```python
+from collections.abc import Generator
+
+
 @pytest.fixture
 def database() -> Generator[Database, None, None]:
     """Fixture with setup and teardown."""
@@ -43,6 +46,10 @@ def database() -> Generator[Database, None, None]:
 ### フィクスチャのスコープ
 
 ```python
+from collections.abc import Generator
+from pathlib import Path
+
+
 # 関数スコープ（デフォルト）: テストごとに実行する
 @pytest.fixture
 def temp_file(tmp_path: Path) -> Path:
@@ -63,26 +70,27 @@ def module_db() -> Generator[Database, None, None]:
 ## パラメータ化
 
 ```python
-@pytest.mark.parametrize("input,expected", [
+# 組み込みの input を shadow しないよう、引数名は text などにする
+@pytest.mark.parametrize("text,expected", [
     ("hello", "HELLO"),
     ("world", "WORLD"),
     ("PyThOn", "PYTHON"),
 ])
-def test_uppercase(input: str, expected: str) -> None:
+def test_uppercase(text: str, expected: str) -> None:
     """Test string uppercasing with multiple inputs."""
-    assert input.upper() == expected
+    assert text.upper() == expected
 ```
 
 ```python
 # 読みやすさのためにテスト ID を追加する
-@pytest.mark.parametrize("input,expected", [
+@pytest.mark.parametrize("address,expected", [
     ("valid@email.com", True),
     ("invalid", False),
     ("@no-domain.com", False),
 ], ids=["valid-email", "missing-at", "missing-domain"])
-def test_email_validation(input: str, expected: bool) -> None:
+def test_email_validation(address: str, expected: bool) -> None:
     """Test email validation with readable test IDs."""
-    assert is_valid_email(input) is expected
+    assert is_valid_email(address) is expected
 ```
 
 ## モックとパッチ
