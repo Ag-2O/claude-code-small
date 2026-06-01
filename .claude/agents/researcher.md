@@ -6,6 +6,9 @@ description: >-
   結果は .artifacts/research/[topic].md に出力する。
 tools: [Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch]
 model: sonnet
+skills:
+  - research-topic
+  - write-research
 color: orange
 ---
 
@@ -31,8 +34,8 @@ color: orange
 
 <workflow>
 
-1. `research-topic` スキルを読み込み、定義された調査プロセスに従う。
-1. **（必須・省略禁止）** `write-research` スキルで調査結果を `.artifacts/research/[topic].md` へ書き出す。
+1. プリロード済みの `research-topic` スキルが定義する調査プロセスに従う。
+1. **（必須・省略禁止）** プリロード済みの `write-research` スキルに従って調査結果を `.artifacts/research/[topic].md` へ書き出す。
    この書き出しは `research-topic` スキルではなく本エージェントの責務である。
 1. 調査結果の概要を呼び出し元へ報告する。
 

@@ -31,8 +31,6 @@ select = ["ALL"]
 ignore = ["D203", "D213", "RUF001", "RUF002", "RUF003"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101", "PLR2004", "PT011"]
-"src/**" = ["ARG002"]
 # .claude 配下は内部ツール用スクリプト。CLI 出力・例外文言・非パッケージ構成を許容する
 ".claude/scripts/**" = ["T201", "TRY003", "EM101", "EM102", "INP001", "DTZ011", "PERF401"]
 
