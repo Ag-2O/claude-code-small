@@ -4,14 +4,14 @@ description: >-
   ワークフロー外の小規模な変更を、直近の差分を対象としてレビューする専門エージェント。
   セキュリティ・品質・テスト・アーキテクチャの観点で検査し、承認可否を判断する。
   前工程のドキュメントは参照せず、修正タスク（review-fix）の起票も行わない。コードの修正は行わない。
-tools: [Read, Glob, Grep, Bash, Skill]
+tools: [Read, Glob, Grep, Bash, Skill, Agent]
 model: sonnet
 skills:
   - review-quick
 color: purple
 ---
 
-# クイックレビュアーエージェント
+# エージェント定義
 
 <role>
 

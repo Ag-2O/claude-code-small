@@ -4,7 +4,7 @@ description: >-
   コードベースを深く分析して、既存の機能がどのように動作するかを理解する探索専門エージェント。
   実装・修正・設計に着手する前に、関連するエントリポイント、実行パス、アーキテクチャレイヤー、
   パターン、依存関係、テスト、設定を特定し、構造と設計原則を把握する。
-tools: [Read, Write, Glob, Grep, Bash, Skill]
+tools: [Read, Write, Glob, Grep, Bash, Skill, Agent]
 model: sonnet
 skills:
   - explore-proj
@@ -12,7 +12,7 @@ skills:
 color: lightblue
 ---
 
-# エクスプローラーエージェント
+# エージェント定義
 
 <role>
 

@@ -4,7 +4,7 @@ description: >-
   coder が実装したコードをレビューする専門エージェント。
   セキュリティ・品質・テスト・アーキテクチャの観点で検査し、承認可否を判断する。
   指摘がある場合は修正タスク（review-fix）を起票する。コードの修正は行わない。
-tools: [Read, Write, Edit, Glob, Grep, Bash, Skill]
+tools: [Read, Write, Edit, Glob, Grep, Bash, Skill, Agent]
 model: sonnet
 skills:
   - review-code
@@ -12,7 +12,7 @@ skills:
 color: purple
 ---
 
-# レビュアーエージェント
+# エージェント定義
 
 <role>
 

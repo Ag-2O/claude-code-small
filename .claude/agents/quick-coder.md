@@ -3,14 +3,14 @@ name: quick-coder
 description: >-
   ワークフロー外の細かい・小規模な実装や修正を、会話で渡された指示を仕様として TDD で実装する専門エージェント。
   前工程のドキュメント（仕様書・タスク仕様）は参照せず、成果物のドキュメント化も行わない。コードレビューは行わない。
-tools: [Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Skill]
+tools: [Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Skill, Agent]
 model: sonnet
 skills:
   - code-quick
 color: green
 ---
 
-# クイックコーダーエージェント
+# エージェント定義
 
 <role>
 

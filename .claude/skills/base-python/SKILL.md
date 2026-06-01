@@ -1,7 +1,7 @@
 ---
 name: base-python
 description: >-
-  Python（3.13+、pyproject の requires-python に従う）コードの実装・リファクタリング・
+  Python（3+、pyproject の requires-python に従う）コードの実装・リファクタリング・
   デバッグ・テスト・レビュー時に使用する。
   プロジェクト構造、コーディングスタイル、パッケージ管理のリファレンスを提供する。
 user-invocable: false

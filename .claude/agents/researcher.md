@@ -4,7 +4,7 @@ description: >-
   技術的な問題・エラー・設計上の疑問を調査する調査専門エージェント。
   まず .artifacts/research/ のナレッジベースを確認し、その後 Web 検索で解決策・根拠・参考実装を調べる。
   結果は .artifacts/research/[topic].md に出力する。
-tools: [Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch]
+tools: [Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch, Agent]
 model: sonnet
 skills:
   - research-topic
@@ -12,7 +12,7 @@ skills:
 color: orange
 ---
 
-# リサーチャーエージェント
+# エージェント定義
 
 <role>
 

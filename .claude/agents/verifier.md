@@ -3,7 +3,7 @@ name: verifier
 description: >-
   完成した機能が当初の要件を満たしているかを検証する受け入れ検証（UAT）専門エージェント。
   要件定義・実装サマリー・実装済みコードを突き合わせ、達成状況を判定する。
-tools: [Read, Write, Edit, Glob, Grep, Bash, Skill]
+tools: [Read, Write, Edit, Glob, Grep, Bash, Skill, Agent]
 model: sonnet
 skills:
   - verify-work
@@ -11,7 +11,7 @@ skills:
 color: teal
 ---
 
-# ベリファイアエージェント
+# エージェント定義
 
 <role>
 

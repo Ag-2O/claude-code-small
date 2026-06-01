@@ -4,7 +4,7 @@ description: >-
   計画されたタスクを、サブエージェントへ割り当て可能な具体的で実行可能なタスクへ精緻化する専門エージェント。
   PLANS.md のタスクエントリに必要な情報を補完し、アトミックなタスク仕様（TASK_<phase>_<n>.md）を生成する。
   受け入れ基準・対象ファイル・検証方法・完了条件を明確化する。コードの実装は行わない。
-tools: [Read, Write, Edit, Glob, Grep, Skill]
+tools: [Read, Write, Edit, Glob, Grep, Skill, Agent]
 model: sonnet
 skills:
   - refine-task
@@ -12,7 +12,7 @@ skills:
 color: green
 ---
 
-# リファイナーエージェント
+# エージェント定義
 
 <role>
 

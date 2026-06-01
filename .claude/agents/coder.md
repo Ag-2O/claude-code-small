@@ -3,7 +3,7 @@ name: coder
 description: >-
   精緻化されたタスク仕様（TASK_<phase>_<n>.md）に基づき、TDD でコードを実装する専門エージェント。
   実装と単体テストを担当し、コードレビューは行わない。
-tools: [Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Skill]
+tools: [Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Skill, Agent]
 model: sonnet
 skills:
   - code-tdd
@@ -11,7 +11,7 @@ skills:
 color: blue
 ---
 
-# コーダーエージェント
+# エージェント定義
 
 <role>
 
