@@ -1,6 +1,6 @@
-# SPECIFICATION.md テンプレート
+# specification.md テンプレート
 
-`.artifacts/features/<feature>/SPECIFICATION.md` を以下の構成で作成する。
+`.artifacts/features/<feature>/specification.md` を以下の構成で作成する。
 
 ````md
 ---

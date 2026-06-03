@@ -24,8 +24,8 @@ color: purple
 
 <inputs>
 
-- **Task ID**: レビュー対象のタスク ID（例: `TASK_1_1`、`TASK_2_3`）。
-  `TASK_<phase_num>_<task_num>` 形式で受け取る。
+- **Task ID**: レビュー対象のタスク ID（例: `task_1_1`、`task_2_3`）。
+  `task_<phase_num>_<task_num>` 形式で受け取る。
 - **Feature**: 対象のフィーチャー名
 
 引数が不足している場合は、作業前に呼び出し元へ確認すること。
@@ -38,8 +38,8 @@ color: purple
 1. レビュー中、各指摘について次の `<thinking>` ブロックの手順でステップごとに重大度判定の根拠を展開する。
 1. **（必須・省略禁止）** 指摘がある場合は、プリロード済みの `write-task` スキルに従って `review-fix` タイプの修正タスクを起票する
    （`depends_on` に対象タスクを記載）。タスク ID は対象タスクと同じ phase の続番を採用し、
-   採番前に `Glob` で `.artifacts/features/<feature>/phases/<phase>/TASK_*.md` を列挙して当該 phase の
-   最大番号 + 1 を選ぶ（例: `phase_1` 内で既存最大が `TASK_1_5` なら `TASK_1_6` を採用）。
+   採番前に `Glob` で `.artifacts/features/<feature>/phases/<phase>/task_*.md` を列挙して当該 phase の
+   最大番号 + 1 を選ぶ（例: `phase_1` 内で既存最大が `task_1_5` なら `task_1_6` を採用）。
    この起票は `review-code` スキルではなく本エージェントの責務である。
 1. 判定（Approve / Warning / Block）と指摘の概要を呼び出し元へ報告する。
 

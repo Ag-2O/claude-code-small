@@ -20,9 +20,9 @@ allowed-tools: [Read, Write, Edit, Glob, Grep]
 
 ## フェーズ 1: 入力の収集
 
-- `.artifacts/features/<feature>/PLANS.md` を読み込み、対象タスクの概要・対象ファイル・依存・想定規模を把握する。
-- `.artifacts/features/<feature>/SPECIFICATION.md` と `REQUIREMENTS.md` から関連する仕様・受け入れ基準を抽出する。
-- `.artifacts/ARCHITECTURE.md` があれば、関係するレイヤー・既存パターンを確認する。
+- `.artifacts/features/<feature>/plans.md` を読み込み、対象タスクの概要・対象ファイル・依存・想定規模を把握する。
+- `.artifacts/features/<feature>/specification.md` と `requirements.md` から関連する仕様・受け入れ基準を抽出する。
+- `.artifacts/project_architecture.md` があれば、関係するレイヤー・既存パターンを確認する。
 - 対象ファイル周辺の既存コードを `Read` / `Grep` で確認し、命名規約・パターンを把握する。
 
 ## フェーズ 2: タスクの精緻化
@@ -33,7 +33,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep]
 - **実装内容（action）**: 何をどう実装するか。使用するライブラリ・関数・避けるべきアプローチを具体的に。
 - **検証方法（verify）**: 完了を判定する具体的な手段（テストコマンド・型チェック・リンタなど）。
 - **完了条件（done）**: 満たすべき最終状態。
-- **依存関係**: PLANS.md から引き継いだ先行タスク ID。
+- **依存関係**: plans.md から引き継いだ先行タスク ID。
 
 ### verify の設計
 
@@ -117,7 +117,7 @@ uv run python -c "import yaml; assert yaml.safe_load(open('config/app.yaml'))['t
 精緻化中、各要素について以下の順でステップごとに思考を展開すること。
 最終出力には含めず、内部推論として用いる。
 
-1. **対象ファイルの特定**: PLANS.md と既存コードから、変更・新規作成するファイルパスを確定する。
+1. **対象ファイルの特定**: plans.md と既存コードから、変更・新規作成するファイルパスを確定する。
 1. **action の具体化**: 何をどう実装するか、使用するライブラリ・関数、避けるべきアプローチを言語化する。
 1. **verify の設計**: 完了判定が確実かつ意味のある手段になっているかを確認する
    （単体テスト・型チェック・AST ベースのリンタを優先し、`grep -c` は避ける）。
@@ -135,6 +135,6 @@ uv run python -c "import yaml; assert yaml.safe_load(open('config/app.yaml'))['t
 - **要決定事項はエスカレーションする**: 仕様・設計に明記されていない選択は自分で決めず、選択肢を
   「要決定事項」として列挙して呼び出し元（メインエージェント）へ委ねる。タスク仕様には論点を残し、
   暫定の前提を置いた場合は前提であると明示する。方針が決まれば呼び出し元から改めて精緻化タスクが渡され、
-  既存の `TASK_<phase>_<n>.md` と `STATE.md` から状況を復元して再開する（途中状態の保存は不要）。
+  既存の `task_<phase_num>_<task_num>.md` と `state.db` から状況を復元して再開する（途中状態の保存は不要）。
 
 </principles>

@@ -1,7 +1,7 @@
 ---
 name: code-tdd
 description: >-
-  精緻化されたタスク仕様（TASK_<phase>_<n>.md）に基づき、TDD でコードを実装する時に使用する。
+  精緻化されたタスク仕様（task_<phase_num>_<task_num>.md）に基づき、TDD でコードを実装する時に使用する。
   RED → GREEN → REFACTOR のサイクルで実装し、タスクの検証ゲートを満たす。coder サブエージェントが使用する。
 user-invocable: false
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, TodoWrite]
@@ -16,21 +16,21 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, TodoWrite]
 
 ## 準備
 
-実装対象のタスク ID（`TASK_<phase_num>_<task_num>` 形式）とフィーチャー名を確認する。
+実装対象のタスク ID（`task_<phase_num>_<task_num>` 形式）とフィーチャー名を確認する。
 未指定の場合は呼び出し元へ確認する。
-次に、対象の `.artifacts/features/<feature>/phases/<phase>/TASK_<phase_num>_<task_num>.md` を読み込む。
+次に、対象の `.artifacts/features/<feature>/phases/<phase>/task_<phase_num>_<task_num>.md` を読み込む。
 存在しない場合は停止し、先に `refiner` でタスクを精緻化するよう呼び出し元へ伝える。
 
 ## フェーズ 1: タスクの把握
 
-- `TASK_<phase>_<n>.md` の `<action>` / `<files>` / `<verify>` / `<done>` と受け入れ基準を把握する。
-- 必要に応じて `.artifacts/features/<feature>/SPECIFICATION.md` の関連箇所、`.artifacts/ARCHITECTURE.md` を参照する。
+- `task_<phase_num>_<task_num>.md` の `<action>` / `<files>` / `<verify>` / `<done>` と受け入れ基準を把握する。
+- 必要に応じて `.artifacts/features/<feature>/specification.md` の関連箇所、`.artifacts/project_architecture.md` を参照する。
 - 対象ファイル周辺の既存コードを読み、命名規約・パターン・既存テストを把握する。
 - `.artifacts/research/*.md` が存在し関連する場合は読み込み、実装へ反映する。
 
 ## フェーズ 2: TDD で実装
 
-`TASK_<phase>_<n>.md` のスコープ内で、次の RED → GREEN → REFACTOR サイクルに従って実装する。
+`task_<phase_num>_<task_num>.md` のスコープ内で、次の RED → GREEN → REFACTOR サイクルに従って実装する。
 スコープ外の変更や機能追加はしない。
 
 ### Step 1: RED — 失敗するテストを書く
@@ -52,18 +52,17 @@ RED が確認されるまでプロダクションコードには触れない。
 
 ## フェーズ 3: 検証
 
-`TASK_<phase>_<n>.md` の `<verify>` に指定された手段を実行し、満たされるまで修正する。
-Python では次を用いる。
+`task_<phase_num>_<task_num>.md` の `<verify>` に指定された手段を実行し、満たされるまで修正する。
+加えて、対象言語のスキル（`base-python` など）が定めるテストと lint の検証ゲートを実行し、違反を 0 件にする。
 
-- テスト: `uv run pytest <対象>`（カバレッジは `uv run pytest --cov=<package> --cov-report=term-missing`）
-- 静的解析: `uv run ruff check <対象>`。**特定ファイルだけでなく、変更したパッケージとテストの
-  ディレクトリ全体**を対象にする（例: `uv run ruff check src/<package> tests`）。
-  `__init__.py` などの見落としを防ぐため。
+- テストランナー・カバレッジ・lint の**具体的なコマンドは言語スキルを参照する**。
+  ワークフローとしてのスコープは「ゲートを実行し満たすこと」であり、言語固有のコマンドは持たない。
+- lint は編集ごとのフックでは実行されない（フックは format のみ）。このゲートで必ず lint を通すこと。
 
 ## フェーズ 4: 完了の扱い
 
 `<verify>` が満たされた時点で本スキル（TDD 実装方法論）の責務は完了とする。
-成果物の永続化（SUMMARY 追記・STATE 記録）と呼び出し元への報告は本スキルでは行わない。
+成果物の永続化（サマリー追記・state.db 記録）と呼び出し元への報告は本スキルでは行わない。
 これらは呼び出し元である `coder` エージェント定義の「完了時の必須ステップ」が担う。
 
 ## カバーすべきエッジケース

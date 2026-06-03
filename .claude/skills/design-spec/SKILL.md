@@ -19,14 +19,14 @@ allowed-tools: [Read, Glob, Grep, AskUserQuestion]
 
 対象のフィーチャー名を確認し、要件定義書の存在を確認する。
 
-- `.artifacts/features/<feature>/REQUIREMENTS.md` が **存在する** 場合: フェーズ 1 へ進む。
+- `.artifacts/features/<feature>/requirements.md` が **存在する** 場合: フェーズ 1 へ進む。
 - **存在しない** 場合: ユーザーへ通知し、先に `define-reqs` を実行するか、要件をインラインで提供するよう案内する。
 
 ## フェーズ 1: 現状分析
 
-- `.artifacts/features/<feature>/REQUIREMENTS.md` を読み込む。
+- `.artifacts/features/<feature>/requirements.md` を読み込む。
 - 既存コードベースがある場合は `Grep` / `Glob` でアーキテクチャ・パターン・規約を把握する。
-- `.artifacts/ARCHITECTURE.md` が存在する場合は読み込み、既存構造との整合を取る。
+- `.artifacts/project_architecture.md` が存在する場合は読み込み、既存構造との整合を取る。
 - `.artifacts/research/*.md` が存在する場合は読み込み、調査結果を設計へ反映する。
 
 ## フェーズ 2: 設計
@@ -75,8 +75,8 @@ allowed-tools: [Read, Glob, Grep, AskUserQuestion]
 重要な設計決定（技術選定・アーキテクチャ分割・データモデル）について、以下の順で
 ステップごとに思考を展開すること。最終出力には含めず、内部推論として用いる。
 
-1. **要件との対応**: REQUIREMENTS.md のどの受け入れ基準・非機能要件に応える決定か。
-1. **既存資産との整合**: ARCHITECTURE.md や既存コードの慣習と矛盾しないか。
+1. **要件との対応**: requirements.md のどの受け入れ基準・非機能要件に応える決定か。
+1. **既存資産との整合**: project_architecture.md や既存コードの慣習と矛盾しないか。
 1. **代替案の列挙**: 候補となる選択肢を 2〜3 個挙げ、それぞれのメリット・デメリットを評価する。
 1. **トレードオフの評価**: 性能・保守性・実装コスト・将来拡張性のバランスを判定する。
 1. **決定の確定**: 採用案と却下案を明示し、判断根拠を一文で要約する。

@@ -1,20 +1,20 @@
 ---
 name: write-architecture
 description: >-
-  コードベースの分析結果を .artifacts/ARCHITECTURE.md へ書き込む時に使用する。
+  コードベースの分析結果を .artifacts/project_architecture.md へ書き込む時に使用する。
   プロジェクト全体マップとして差分更新する。explorer サブエージェントが使用する。
 user-invocable: false
 allowed-tools: [Read, Write, Edit]
 ---
 
-# ARCHITECTURE.md 書き込みワークフロー
+# project_architecture.md 書き込みワークフロー
 
-コードベースの分析結果を `.artifacts/ARCHITECTURE.md` へ書き込む手順を定義する。
-`ARCHITECTURE.md` はプロジェクト全体のマップとして単一ファイルで管理し、**差分更新**を原則とする。
+コードベースの分析結果を `.artifacts/project_architecture.md` へ書き込む手順を定義する。
+`project_architecture.md` はプロジェクト全体のマップとして単一ファイルで管理し、**差分更新**を原則とする。
 
 <workflow>
 
-1. `Read` で既存の `.artifacts/ARCHITECTURE.md` を読み込む。存在しない場合は `./template.md` を基に新規作成する。
+1. `Read` で既存の `.artifacts/project_architecture.md` を読み込む。存在しない場合は `./template.md` を基に新規作成する。
 1. 今回の調査対象に関係するセクションのみを `Edit` で更新・追記する。無関係なセクションには触れない。
 1. フロントマターの `last_updated`（日付）と `commit`（`git rev-parse --short HEAD` の結果）を更新する。
 1. 全面再生成は、呼び出し元から明示的に指示された場合のみ行う。

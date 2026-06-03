@@ -5,7 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "tzdata>=2026.2",
 ]
 
 [dependency-groups]
@@ -16,23 +15,52 @@ dev = [
     "pymarkdownlnt",
     "ruff",
     "pytest",
-    "pytest-cov"
+    "pytest-cov",
+    "tzdata"
 ]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.pymarkdown]
+# Markdown lint（ゲート実行）の設定。フックでは実行せず base-markdown スキルのゲートで使う。
+# プロジェクトの Markdown 規約（rules/markdown.md・xml-tags.md）に合わせて既定ルールを調整する。
+extensions.front-matter.enabled = true   # YAML フロントマターを setext 見出しと誤認させない
+plugins.md003.style = "atx"              # ATX 見出しに統一（rules/markdown.md）
+plugins.md013.enabled = false            # 行長は 120 容認方針・mdformat 非整形のため無効化
+plugins.md033.enabled = false            # XML タグ（xml-tags.md）を許容するため inline HTML 検査を無効化
+plugins.md041.enabled = false            # フロントマター始まりを許容（先頭 h1 を必須化しない）
 
 [tool.ruff]
 line-length = 88
 
 [tool.ruff.lint]
 select = ["ALL"]
-# RUF001-003: 日本語 UI 文字列・コメントの全角記号を誤検出するため除外する
-ignore = ["D203", "D213", "RUF001", "RUF002", "RUF003"]
+ignore = [
+    "D203",   # クラス docstring 前の空行要求（D211 と競合するため）
+    "D213",   # docstring 要約を 2 行目開始にする要求（D212 と競合するため）
+    "RUF001", # 文字列中の紛らわしい全角記号（日本語で誤検出するため）
+    "RUF002", # docstring 中の紛らわしい全角記号（日本語で誤検出するため）
+    "RUF003", # コメント中の紛らわしい全角記号（日本語で誤検出するため）
+]
 
 [tool.ruff.lint.per-file-ignores]
-# .claude 配下は内部ツール用スクリプト。CLI 出力・例外文言・非パッケージ構成を許容する
-".claude/scripts/**" = ["T201", "TRY003", "EM101", "EM102", "INP001", "DTZ011", "PERF401"]
+# .claude 配下は内部ツール用の Python スクリプト。CLI 出力・例外文言・非パッケージ構成を許容する
+".claude/**/*.py" = [
+    "T201",    # print の使用（CLI 出力のため）
+    "TRY003",  # 例外メッセージを例外クラス外に長く書く
+    "EM101",   # 例外に文字列リテラルを直接渡す
+    "EM102",   # 例外に f-string を直接渡す
+    "INP001",  # __init__.py なしの暗黙名前空間パッケージ
+    "DTZ011",  # date.today()（タイムゾーン非指定）の使用
+    "PERF401", # ループでの append よりリスト内包表記を推奨
+]
+# テストは上記に加え pytest 慣習（assert・マジック値・docstring 省略）を許容する（マッチは和集合）
+".claude/**/test_*.py" = [
+    "S101",    # assert の使用
+    "PLR2004", # マジック値との直接比較
+    "D103",    # 公開関数の docstring 省略
+]
 
 [tool.ruff.format]
 indent-style = "space"

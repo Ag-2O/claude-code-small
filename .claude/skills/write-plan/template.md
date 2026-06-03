@@ -1,6 +1,6 @@
-# PLANS.md テンプレート
+# plans.md テンプレート
 
-`.artifacts/features/<feature>/PLANS.md` を以下の構成で作成する。
+`.artifacts/features/<feature>/plans.md` を以下の構成で作成する。
 
 ```md
 ---
@@ -26,14 +26,14 @@ last_updated: YYYY-MM-DD
 
 ## タスク一覧
 
-タスク ID は `TASK_<phase_num>_<task_num>` 形式で採番する（例: `TASK_1_1`、`TASK_2_3`）。
+タスク ID は `task_<phase_num>_<task_num>` 形式で採番する（例: `task_1_1`、`task_2_3`）。
 タスク番号は phase ごとに 1 から開始する。
 
 | タスク ID | フェーズ | 概要 | 対象ファイル（概算） | 依存 | 想定規模 |
 | --- | --- | --- | --- | --- | --- |
-| TASK_1_1 | phase_1 | [WHAT / WHY] | `path/to/file` | なし | 約 N ファイル |
-| TASK_1_2 | phase_1 | [WHAT / WHY] | `path/to/file` | TASK_1_1 | 約 N ファイル |
-| TASK_2_1 | phase_2 | [WHAT / WHY] | `path/to/file` | TASK_1_2 | 約 N ファイル |
+| task_1_1 | phase_1 | [WHAT / WHY] | `path/to/file` | なし | 約 N ファイル |
+| task_1_2 | phase_1 | [WHAT / WHY] | `path/to/file` | task_1_1 | 約 N ファイル |
+| task_2_1 | phase_2 | [WHAT / WHY] | `path/to/file` | task_1_2 | 約 N ファイル |
 
 - **想定規模**: 変更ファイル数と予想トークン量（コンテキスト・コスト基準）で見積もる。
 - **依存**: 先行して完了している必要があるタスク ID。無ければ「なし」。
@@ -42,9 +42,9 @@ last_updated: YYYY-MM-DD
 
 依存関係から導いた並列実行グループ。同一 Wave 内のタスクは並列に実行できる。
 
-- **Wave 1**: TASK_1_1, TASK_1_3 （互いに独立）
-- **Wave 2**: TASK_1_2 （TASK_1_1 に依存）
-- **Wave 3**: TASK_2_1 （TASK_1_2 に依存）
+- **Wave 1**: task_1_1, task_1_3 （互いに独立）
+- **Wave 2**: task_1_2 （task_1_1 に依存）
+- **Wave 3**: task_2_1 （task_1_2 に依存）
 
 ## テスト戦略
 

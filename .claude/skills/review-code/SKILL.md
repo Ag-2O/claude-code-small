@@ -18,11 +18,11 @@ allowed-tools: [Read, Glob, Grep, Bash]
 ## フェーズ 1: 変更内容の把握
 
 - `git diff` で変更ファイルと差分を確認する（取得できない場合もある）。
-- 対象の `.artifacts/features/<feature>/phases/<phase>/TASK_<phase_num>_<task_num>.md` を読み込み、
+- 対象の `.artifacts/features/<feature>/phases/<phase>/task_<phase_num>_<task_num>.md` を読み込み、
   実装が仕様の範囲内かを把握する。
-- `.artifacts/features/<feature>/SUMMARY.md` の該当タスクエントリを読み、
+- `.artifacts/features/<feature>/summaries/phase_<phase>.md` の該当タスクエントリを読み、
   実装内容・設計判断と実際の差分が一致するか検証する。
-- `.artifacts/features/<feature>/SPECIFICATION.md` と必要に応じて `.artifacts/ARCHITECTURE.md` を参照し、
+- `.artifacts/features/<feature>/specification.md` と必要に応じて `.artifacts/project_architecture.md` を参照し、
   設計からの逸脱を検出する。
 - `Grep` / `Glob` で関連する既存コードを確認し、プロジェクト全体への影響を把握する。
 
@@ -34,7 +34,7 @@ allowed-tools: [Read, Glob, Grep, Bash]
 ## フェーズ 3: レビュー
 
 後述の「重大度ガイド」に従い、優先度順に問題を検出する。
-実装が `TASK_<phase>_<n>.md` のスコープ・検証ゲート・受け入れ基準の範囲内に収まっているか
+実装が `task_<phase_num>_<task_num>.md` のスコープ・検証ゲート・受け入れ基準の範囲内に収まっているか
 必ず確認する。
 
 ## フェーズ 4: 完了の扱い

@@ -26,8 +26,8 @@ allowed-tools: [Read, Glob, Grep, AskUserQuestion]
 - ワークスペース全体のディレクトリ構造を確認し、何が既に存在するかを把握する。
 - `Grep` / `Glob` で関連コンポーネント・設定・依存関係・既存の成果物を特定する。
 - 関連するソースコードや設定が見つかった場合は `Read` で確認する。
-- `.artifacts/features/<feature>/REQUIREMENTS.md` が既に存在する場合は読み込み、更新が必要な箇所を特定する。
-- `.artifacts/ARCHITECTURE.md` が存在する場合は読み込み、既存構造を踏まえる。
+- `.artifacts/features/<feature>/requirements.md` が既に存在する場合は読み込み、更新が必要な箇所を特定する。
+- `.artifacts/project_architecture.md` が存在する場合は読み込み、既存構造を踏まえる。
 
 ## フェーズ 2: 要件の明確化
 

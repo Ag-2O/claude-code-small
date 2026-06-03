@@ -1,21 +1,21 @@
-# TASK\_<phase>\_<n>.md テンプレート
+# task\_<phase_num>\_<task_num>.md テンプレート
 
-`.artifacts/features/<feature>/phases/<phase>/TASK_<phase_num>_<task_num>.md` を以下の構成で作成する。
+`.artifacts/features/<feature>/phases/<phase>/task_<phase_num>_<task_num>.md` を以下の構成で作成する。
 タスク本体は、情報境界を明確にするため XML タグで構造化する。
-ファイル名およびフロントマターの `id` は `TASK_<phase_num>_<task_num>` 形式に統一する。
-タスク番号は phase ごとに 1 から開始する（例: `phase_1` の最初は `TASK_1_1`、
-`phase_2` の最初は `TASK_2_1`）。
+ファイル名およびフロントマターの `id` は `task_<phase_num>_<task_num>` 形式に統一する。
+タスク番号は phase ごとに 1 から開始する（例: `phase_1` の最初は `task_1_1`、
+`phase_2` の最初は `task_2_1`）。
 
 ````md
 ---
-id: TASK_<phase_num>_<task_num>
+id: task_<phase_num>_<task_num>
 feature: <feature_name>
 phase: <phase>
 type: impl
 depends_on: []
 ---
 
-# TASK_<phase_num>_<task_num>: <タスク名>
+# task_<phase_num>_<task_num>: <タスク名>
 
 ## 背景
 
@@ -51,15 +51,15 @@ depends_on: []
 
 ## フィールドの説明
 
-- **id**: ファイル名と一致する `TASK_<phase_num>_<task_num>` 形式（例: `TASK_1_1`、`TASK_2_3`）。
+- **id**: ファイル名と一致する `task_<phase_num>_<task_num>` 形式（例: `task_1_1`、`task_2_3`）。
 - **type**: `impl`（通常の実装）または `review-fix`（レビュー指摘の修正）。
-- **depends_on**: 先行して完了している必要があるタスク ID の配列（例: `[TASK_1_1, TASK_1_2]`）。
+- **depends_on**: 先行して完了している必要があるタスク ID の配列（例: `[task_1_1, task_1_2]`）。
 - **verify**: 単体テスト・型チェック・リンタなど意味のある手段を指定する。`grep -c` は使わない。
 
 ## 採番ルール
 
 - タスク番号は phase ごとに `1` から開始する。別 phase であれば同じ番号を使ってよい。
 - `review-fix` タスクは対象タスクと同じ phase の続番を割り当てる
-  （例: `phase_1` で既存の最大番号が `TASK_1_5` なら、次の `review-fix` は `TASK_1_6`）。
-- 採番前に `Glob` で `.artifacts/features/<feature>/phases/<phase>/TASK_*.md` を列挙し、
+  （例: `phase_1` で既存の最大番号が `task_1_5` なら、次の `review-fix` は `task_1_6`）。
+- 採番前に `Glob` で `.artifacts/features/<feature>/phases/<phase>/task_*.md` を列挙し、
   当該 phase の最大番号 + 1 を採用する。

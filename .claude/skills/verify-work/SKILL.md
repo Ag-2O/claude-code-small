@@ -20,16 +20,16 @@ allowed-tools: [Read, Glob, Grep, Bash]
 
 ## フェーズ 1: 基準の把握
 
-- `.artifacts/features/<feature>/REQUIREMENTS.md` を読み込み、受け入れ基準と必須機能を抽出する。
-- `.artifacts/features/<feature>/SPECIFICATION.md` で設計上の達成条件を確認する。
-- `.artifacts/features/<feature>/SUMMARY.md` で実装内容・テスト結果・スコープ外の申告を把握する。
+- `.artifacts/features/<feature>/requirements.md` を読み込み、受け入れ基準と必須機能を抽出する。
+- `.artifacts/features/<feature>/specification.md` で設計上の達成条件を確認する。
+- `.artifacts/features/<feature>/summaries/phase_<phase>.md` で実装内容・テスト結果・スコープ外の申告を把握する。
 
 ## フェーズ 2: 検証の実行
 
 - 受け入れ基準を 1 つずつ、実装済みコードとテストに照らして確認する。
 - 既存のテストスイートを実行し、結果を記録する。
 - 必要に応じて手動確認（コマンド実行・API 呼び出しなど）を行い、証拠を残す。
-- SUMMARY.md の申告と実際の挙動に乖離がないか確認する。
+- summaries/phase_<phase>.md の申告と実際の挙動に乖離がないか確認する。
 
 ## フェーズ 3: 判定
 
@@ -39,7 +39,7 @@ allowed-tools: [Read, Glob, Grep, Bash]
 ## フェーズ 4: 完了の扱い
 
 判定とその根拠・ギャップ所見の整理までが本スキルの責務とする。
-検証結果ファイルへの書き出し（`VERIFICATION.md`）と呼び出し元への報告は本スキルでは行わず、
+検証結果ファイルへの書き出し（`verification.md`）と呼び出し元への報告は本スキルでは行わず、
 呼び出し元（`verifier` エージェント定義）が担う。
 
 </workflow>
@@ -49,8 +49,8 @@ allowed-tools: [Read, Glob, Grep, Bash]
 各受け入れ基準について、以下の順でステップごとに思考を展開すること。
 最終出力には含めず、内部推論として用いる。
 
-1. **基準の特定**: REQUIREMENTS.md のどの受け入れ基準を検証しているか。
-1. **証拠の収集**: 関連する実装ファイル・テスト結果・SUMMARY.md のエントリを列挙する。
+1. **基準の特定**: requirements.md のどの受け入れ基準を検証しているか。
+1. **証拠の収集**: 関連する実装ファイル・テスト結果・summaries/phase_<phase>.md のエントリを列挙する。
 1. **充足の評価**: 証拠が基準の要件を完全に満たすか、部分的か、未達か。
 1. **ギャップの特定**: 未達の場合、何が欠けているかと、想定される原因を一文で要約する。
 1. **判定の確定**: 該当基準について Pass / Partial / Fail のいずれに分類するか確定する。

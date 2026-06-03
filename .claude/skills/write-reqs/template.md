@@ -1,6 +1,6 @@
-# REQUIREMENTS.md テンプレート
+# requirements.md テンプレート
 
-`.artifacts/features/<feature>/REQUIREMENTS.md` を以下の構成で作成する。
+`.artifacts/features/<feature>/requirements.md` を以下の構成で作成する。
 
 ```md
 ---

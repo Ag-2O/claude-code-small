@@ -19,14 +19,14 @@ allowed-tools: [Read, Glob, Grep, AskUserQuestion]
 
 対象のフィーチャー名を確認し、設計仕様の存在を確認する。
 
-- `.artifacts/features/<feature>/SPECIFICATION.md` が **存在する** 場合: フェーズ 1 へ進む。
+- `.artifacts/features/<feature>/specification.md` が **存在する** 場合: フェーズ 1 へ進む。
 - **存在しない** 場合: ユーザーへ通知し、先に `design-spec` を実行するか、仕様をインラインで提供するよう案内する。
 
 ## フェーズ 1: 入力分析
 
-- `.artifacts/features/<feature>/REQUIREMENTS.md` と `.artifacts/features/<feature>/SPECIFICATION.md` を読み込む。
+- `.artifacts/features/<feature>/requirements.md` と `.artifacts/features/<feature>/specification.md` を読み込む。
 - 受け入れ基準・前提条件・制約を特定する。
-- `.artifacts/ARCHITECTURE.md` があれば読み込み、影響を受けるコンポーネントと再利用できるパターンを把握する。
+- `.artifacts/project_architecture.md` があれば読み込み、影響を受けるコンポーネントと再利用できるパターンを把握する。
 - 不明点があれば `AskUserQuestion` で確認する。
 
 ## フェーズ 2: タスク分解
@@ -41,7 +41,7 @@ allowed-tools: [Read, Glob, Grep, AskUserQuestion]
 
 各タスクには次を定義する。
 
-- **タスク ID**: `TASK_<phase_num>_<task_num>` 形式で一意に採番する（例: `TASK_1_1`、`TASK_2_3`）。
+- **タスク ID**: `task_<phase_num>_<task_num>` 形式で一意に採番する（例: `task_1_1`、`task_2_3`）。
   タスク番号は phase ごとに `1` から開始する。
 - **概要**: 何を実装するか（WHAT）と、なぜ必要か（WHY）。
 - **対象ファイル（概算）**: 変更が見込まれるファイル。
@@ -66,7 +66,7 @@ allowed-tools: [Read, Glob, Grep, AskUserQuestion]
   並列実行する coder 同士が同じファイル（例: `__init__.py` の `__all__` 集約、
   `pyproject.toml` の依存リスト、共有設定ファイル）を編集すると編集衝突が発生し、
   後勝ち上書きや片方の追記の消失を招くため。共通ファイルを編集するタスクは別 Wave へ分け、
-  順次実行する。判定が難しい場合は、PLANS.md の「対象ファイル」列を相互比較する。
+  順次実行する。判定が難しい場合は、plans.md の「対象ファイル」列を相互比較する。
 
 ## フェーズ 5: 完了の扱い
 

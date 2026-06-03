@@ -31,25 +31,6 @@ def _find_mdformat() -> list[str] | None:
     return None
 
 
-def _find_pymarkdown() -> list[str] | None:
-    """Locate the pymarkdown executable in the virtual environment or system PATH.
-
-    Returns:
-        A list containing the path to the pymarkdown executable, or None if
-        pymarkdown is not available.
-
-    """
-    venv_scripts = Path(".venv/Scripts/pymarkdown.exe")
-    if venv_scripts.exists():
-        return [str(venv_scripts)]
-    venv_bin = Path(".venv/bin/pymarkdown")
-    if venv_bin.exists():
-        return [str(venv_bin)]
-    if shutil.which("pymarkdown"):
-        return ["pymarkdown"]
-    return None
-
-
 def _collect_markdown_paths(tool_input: dict[str, object]) -> list[str]:
     """Extract Markdown file paths targeted by a tool call from its input payload.
 
@@ -82,21 +63,19 @@ def _collect_markdown_paths(tool_input: dict[str, object]) -> list[str]:
     return list(dict.fromkeys(markdown_paths))
 
 
-def _format_markdown_file(file_path: str) -> tuple[int, str]:
-    """Run mdformat and pymarkdown fix/scan on a single Markdown file.
+def _format_markdown_file(file_path: str) -> None:
+    """Run mdformat on a single Markdown file.
+
+    Linting (``pymarkdown scan``) is intentionally not run here. Per-edit
+    linting floods the agent context with diagnostics; lint is instead executed
+    as a workflow gate (see ``.claude/skills/base-markdown`` and
+    ``.claude/rules/markdown.md``). This hook only applies the deterministic,
+    side-effect-free formatter.
 
     Args:
         file_path: Path to the Markdown file to format.
 
-    Returns:
-        A tuple of (exit_code, violations) where exit_code is 0 on success or
-        2 if pymarkdown scan reports remaining violations, and violations is the
-        combined diagnostic output forwarded to stderr (empty string on success).
-
     """
-    exit_code = 0
-    violations = ""
-
     mdformat = _find_mdformat()
     if mdformat:
         subprocess.run(  # noqa: S603
@@ -104,56 +83,6 @@ def _format_markdown_file(file_path: str) -> tuple[int, str]:
             capture_output=True,
             check=False,
         )
-
-    pymarkdown = _find_pymarkdown()
-    if not pymarkdown:
-        return exit_code, violations
-
-    config = Path(__file__).parent / ".pymarkdown.json"
-    config_args = ["--config", str(config)] if config.exists() else []
-    subprocess.run(  # noqa: S603
-        [*pymarkdown, *config_args, "fix", file_path],
-        capture_output=True,
-        check=False,
-    )
-    result = subprocess.run(  # noqa: S603
-        [*pymarkdown, *config_args, "scan", file_path],
-        capture_output=True,
-        check=False,
-        text=True,
-    )
-    if result.returncode != 0:
-        violations = _format_diagnostics(result.stdout, result.stderr, file_path)
-        print(violations, file=sys.stderr)
-        exit_code = 2
-
-    return exit_code, violations
-
-
-def _format_diagnostics(stdout: str, stderr: str, file_path: str) -> str:
-    """Combine subprocess stdout and stderr into a single diagnostic block.
-
-    Args:
-        stdout: Captured stdout from the failed subprocess.
-        stderr: Captured stderr from the failed subprocess.
-        file_path: The Markdown file being checked.
-
-    Returns:
-        A non-empty string describing the failure. When both streams are empty
-        the function returns a synthetic notice that names the file, so the
-        hook never blocks silently.
-
-    """
-    stdout_text = stdout.strip()
-    stderr_text = stderr.strip()
-    parts: list[str] = []
-    if stdout_text:
-        parts.append(stdout_text)
-    if stderr_text:
-        parts.append(stderr_text)
-    if not parts:
-        return f"pymarkdown scan failed for {file_path} (no diagnostic output)"
-    return "\n".join(parts)
 
 
 def main() -> int:
@@ -193,31 +122,25 @@ def main() -> int:
         )
         return 0
 
-    exit_code = 0
     existing_paths: list[str] = []
-    all_violations: list[str] = []
     for file_path in file_paths:
         if Path(file_path).exists():
             existing_paths.append(file_path)
-            file_exit_code, violations = _format_markdown_file(file_path)
-            exit_code = max(exit_code, file_exit_code)
-            if violations:
-                all_violations.append(violations)
+            _format_markdown_file(file_path)
 
-    message = "\n".join(all_violations) if all_violations else "markdown hook completed"
     _history_recorder.append_hook_history(
         HookHistoryEntry(
             hook_event=hook_event,
             script="format_markdown.py",
-            status="success" if exit_code == 0 else "failed",
-            exit_code=exit_code,
+            status="success",
+            exit_code=0,
             target_files=existing_paths,
-            message=message,
+            message="markdown format hook completed",
             tool_name=tool_name,
         ),
     )
 
-    return exit_code
+    return 0
 
 
 if __name__ == "__main__":

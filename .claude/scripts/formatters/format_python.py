@@ -63,37 +63,21 @@ def _collect_python_paths(tool_input: dict[str, object]) -> list[str]:
     return list(dict.fromkeys(python_paths))
 
 
-def _format_python_file(file_path: str, ruff: list[str]) -> tuple[int, str | None]:
-    """Run ruff format and ruff check --fix on a single Python file.
+def _format_python_file(file_path: str, ruff: list[str]) -> None:
+    """Run ruff format on a single Python file.
+
+    Linting (``ruff check``) is intentionally not run here. Per-edit linting
+    floods the agent context with diagnostics; lint is instead executed as a
+    workflow gate (see ``.claude/skills/base-python`` and
+    ``.claude/rules/python.md``). This hook only applies the deterministic,
+    side-effect-free formatter.
 
     Args:
         file_path: Path to the Python file to format.
         ruff: Command prefix for the ruff executable.
 
-    Returns:
-        A tuple of (exit_code, error_message). exit_code is 0 on success or 2
-        if ruff check reports remaining violations. error_message is None on
-        success, or the ruff output string on failure.
-
     """
     subprocess.run([*ruff, "format", file_path], capture_output=True, check=False)  # noqa: S603
-    subprocess.run(  # noqa: S603
-        [*ruff, "check", file_path, "--fix"],
-        capture_output=True,
-        check=False,
-    )
-
-    result = subprocess.run(  # noqa: S603
-        [*ruff, "check", file_path],
-        capture_output=True,
-        check=False,
-        text=True,
-    )
-    if result.returncode != 0:
-        message = result.stdout.strip() or result.stderr.strip() or "ruff check failed"
-        return 2, message
-
-    return 0, None
 
 
 def main() -> int:
@@ -148,48 +132,27 @@ def main() -> int:
         )
         return 0
 
-    exit_code = 0
     existing_paths: list[str] = []
-    messages: list[str] = []
     for file_path in file_paths:
         if not Path(file_path).exists():
             continue
 
         existing_paths.append(file_path)
-        file_exit_code, file_message = _format_python_file(file_path, ruff)
-        exit_code = max(exit_code, file_exit_code)
-        if file_message:
-            messages.append(file_message)
-
-    if messages:
-        combined_message = "\n\n".join(messages)
-        _history_recorder.append_hook_history(
-            HookHistoryEntry(
-                hook_event=hook_event,
-                script="format_python.py",
-                status="failed",
-                exit_code=2,
-                target_files=existing_paths,
-                message=combined_message,
-                tool_name=tool_name,
-            ),
-        )
-        print(combined_message)
-        return 2
+        _format_python_file(file_path, ruff)
 
     _history_recorder.append_hook_history(
         HookHistoryEntry(
             hook_event=hook_event,
             script="format_python.py",
-            status="success" if exit_code == 0 else "failed",
-            exit_code=exit_code,
+            status="success",
+            exit_code=0,
             target_files=existing_paths,
-            message="python hook completed",
+            message="python format hook completed",
             tool_name=tool_name,
         ),
     )
 
-    return exit_code
+    return 0
 
 
 if __name__ == "__main__":

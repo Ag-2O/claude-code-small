@@ -6,6 +6,7 @@
       "Read",
       "Edit",
       "Write",
+      "Skill",
       "Glob",
       "Grep",
       "WebFetch",
@@ -20,10 +21,10 @@
       "Read(**/.env)",
       "Read(**/.env.*)",
       "Write(**/.env)",
-      "Bash(python -c ' *)",
+      "Bash(python *)",
       "Bash(rm -rf *)"
     ],
-    "defaultMode": "bypassPermissions"
+    "defaultMode": "acceptEdits"
   },
   "hooks": {
     "UserPromptSubmit": [

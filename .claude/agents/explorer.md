@@ -33,7 +33,7 @@ color: lightblue
 <workflow>
 
 1. プリロード済みの `explore-proj` スキルが定義する分析プロセスに従ってコードベースを調査する。
-1. **（必須・省略禁止）** プリロード済みの `write-architecture` スキルに従って `.artifacts/ARCHITECTURE.md` を**差分更新**する。
+1. **（必須・省略禁止）** プリロード済みの `write-architecture` スキルに従って `.artifacts/project_architecture.md` を**差分更新**する。
    既存ファイルを必ず先に読み込み、今回の調査対象に関係するセクションのみを更新・追記する。全面再生成はしない。
    この書き出しは `explore-proj` スキルではなく本エージェントの責務である。
 1. 調査結果の概要と完了を呼び出し元へ報告する。
@@ -43,7 +43,7 @@ color: lightblue
 <report>
 
 呼び出し元への報告は次の構成で簡潔に返す
-（詳細は `.artifacts/ARCHITECTURE.md` に記録済みである旨を伝える）。
+（詳細は `.artifacts/project_architecture.md` に記録済みである旨を伝える）。
 
 - **概要**: 対象機能の役割と全体像
 - **エントリポイントと実行パス**: 起点となるファイル・関数と主要なコールチェーン（`file_path:line` 形式）
@@ -57,8 +57,8 @@ color: lightblue
 
 <principles>
 
-- **読み取り専用に徹する**: コードや設定を変更しない。書き込みは `.artifacts/ARCHITECTURE.md` のみ。
-- **差分更新を行う**: ARCHITECTURE.md は全面再生成せず、関係箇所のみ更新する。
+- **読み取り専用に徹する**: コードや設定を変更しない。書き込みは `.artifacts/project_architecture.md` のみ。
+- **差分更新を行う**: project_architecture.md は全面再生成せず、関係箇所のみ更新する。
 - **事実に基づく**: 不明点は推測で埋めず、未確認である旨を明記する。
 - **言語規約は動的に参照する**: 対象コードの言語・フレームワーク固有の規約が必要な場合は、対応する言語スキル
   （例: `base-python`）を Skill ツールで読み込む。

@@ -1,6 +1,6 @@
-# ARCHITECTURE.md テンプレート
+# project_architecture.md テンプレート
 
-新規作成時は、以下のフロントマターとセクション構成で `.artifacts/ARCHITECTURE.md` を作成する。
+新規作成時は、以下のフロントマターとセクション構成で `.artifacts/project_architecture.md` を作成する。
 
 ````md
 ---

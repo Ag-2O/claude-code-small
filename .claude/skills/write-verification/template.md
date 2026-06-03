@@ -1,6 +1,6 @@
-# VERIFICATION.md テンプレート
+# verification.md テンプレート
 
-`.artifacts/features/<feature>/VERIFICATION.md` を以下の構成で作成する。
+`.artifacts/features/<feature>/verification.md` を以下の構成で作成する。
 
 ```md
 ---

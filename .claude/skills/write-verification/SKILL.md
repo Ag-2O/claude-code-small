@@ -1,20 +1,20 @@
 ---
 name: write-verification
 description: >-
-  受け入れ検証の結果を .artifacts/features/<feature>/VERIFICATION.md へ書き込む時に使用する。
+  受け入れ検証の結果を .artifacts/features/<feature>/verification.md へ書き込む時に使用する。
   受け入れ基準ごとの達成状況・テスト結果・未達ギャップをテンプレートに沿って構造化する。verifier が使用する。
 user-invocable: false
 allowed-tools: [Read, Write, Edit]
 ---
 
-# VERIFICATION.md 書き込みワークフロー
+# verification.md 書き込みワークフロー
 
-受け入れ検証の結果を `.artifacts/features/<feature>/VERIFICATION.md` へ書き込む手順を定義する。
+受け入れ検証の結果を `.artifacts/features/<feature>/verification.md` へ書き込む手順を定義する。
 
 <workflow>
 
 1. `Read` で `./template.md` を読み込む。
-1. 既存の `.artifacts/features/<feature>/VERIFICATION.md` があれば読み込み、新しい検証ラウンドとして追記する。
+1. 既存の `.artifacts/features/<feature>/verification.md` があれば読み込み、新しい検証ラウンドとして追記する。
 1. テンプレートのセクション構成を維持し、`Write`（新規）または `Edit`（既存）で書き込む。
 1. プレースホルダーはすべて実際の内容で置き換え、フロントマターの最終更新日を更新する。
 

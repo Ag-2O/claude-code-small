@@ -22,7 +22,7 @@ allowed-tools: [Read, Glob, Grep, WebSearch, WebFetch]
 - **内容**: 調査する内容の具体的な説明。
 - **期待する出力**: サマリー・コード例・参考文献リストなど。
 
-`.artifacts/features/<feature>/SPECIFICATION.md` や `.artifacts/ARCHITECTURE.md` が関連する場合は読み込み、
+`.artifacts/features/<feature>/specification.md` や `.artifacts/project_architecture.md` が関連する場合は読み込み、
 技術スタックと制約を把握する。エラーメッセージやスタックトレースがあれば、手がかりとしてソースを検索する。
 
 ## フェーズ 2: 調査

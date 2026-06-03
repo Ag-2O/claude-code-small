@@ -20,7 +20,7 @@ allowed-tools: [Read, Glob, Grep, Bash]
 
 - `git diff` / `git status` で変更ファイルと差分を確認する（取得できない場合もある）。
 - 呼び出し元から渡されたレビュー対象範囲・重点観点・会話で合意した受け入れ観点を把握する。
-  前工程のドキュメント（`TASK_<phase>_<n>.md`・`SUMMARY.md`・`SPECIFICATION.md`・`ARCHITECTURE.md` 等）は
+  前工程のドキュメント（`task_<phase_num>_<task_num>.md`・`summaries/phase_<phase>.md`・`specification.md`・`project_architecture.md` 等）は
   存在しない前提とし、これらを探しに行かない。
 - `Grep` / `Glob` で関連する既存コードを確認し、変更がプロジェクト全体に与える影響を把握する。
 
