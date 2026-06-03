@@ -142,7 +142,7 @@ def test_cpu_player_wins_horizontal() -> None:
     # 自石を x=0..3, y=7 に配置（x=4 で 5 連完成）
     for x in range(4):
         board.place_stone(x, 7, CPU_STONE)
-    rng = random.Random(0)  # noqa: S311
+    rng = random.Random(0)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     move = player.get_move(board)
     assert move == (4, 7)
@@ -152,7 +152,7 @@ def test_cpu_player_wins_vertical() -> None:
     board = Board()
     for y in range(4):
         board.place_stone(7, y, CPU_STONE)
-    rng = random.Random(0)  # noqa: S311
+    rng = random.Random(0)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     move = player.get_move(board)
     assert move == (7, 4)
@@ -162,7 +162,7 @@ def test_cpu_player_wins_diagonal_down_right() -> None:
     board = Board()
     for i in range(4):
         board.place_stone(i, i, CPU_STONE)
-    rng = random.Random(0)  # noqa: S311
+    rng = random.Random(0)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     move = player.get_move(board)
     assert move == (4, 4)
@@ -172,7 +172,7 @@ def test_cpu_player_wins_diagonal_down_left() -> None:
     board = Board()
     for i in range(4):
         board.place_stone(4 - i, i, CPU_STONE)
-    rng = random.Random(0)  # noqa: S311
+    rng = random.Random(0)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     move = player.get_move(board)
     assert move == (0, 4)
@@ -184,7 +184,7 @@ def test_cpu_player_blocks_opponent() -> None:
     for x in range(4):
         board.place_stone(x, 0, HUMAN_STONE)
     # CPU は自石なし（即勝利マスなし）
-    rng = random.Random(0)  # noqa: S311
+    rng = random.Random(0)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     move = player.get_move(board)
     assert move == (4, 0)
@@ -194,7 +194,7 @@ def test_cpu_player_prefers_neighbor_when_no_win_or_block() -> None:
     board = Board()
     # CPU の石を 1 個だけ置く（8 近傍に空きあり、勝利/ブロック不要）
     board.place_stone(7, 7, CPU_STONE)
-    rng = random.Random(42)  # noqa: S311
+    rng = random.Random(42)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     move = player.get_move(board)
     # 8 近傍のいずれか
@@ -210,7 +210,7 @@ def test_cpu_player_prefers_neighbor_when_no_win_or_block() -> None:
 
 def test_cpu_player_any_empty_when_no_neighbors() -> None:
     board = Board()
-    rng = random.Random(0)  # noqa: S311
+    rng = random.Random(0)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     move = player.get_move(board)
     assert board.is_valid_move(*move)
@@ -219,8 +219,8 @@ def test_cpu_player_any_empty_when_no_neighbors() -> None:
 def test_cpu_player_deterministic_with_seed() -> None:
     board = Board()
     board.place_stone(7, 7, CPU_STONE)
-    rng1 = random.Random(123)  # noqa: S311
-    rng2 = random.Random(123)  # noqa: S311
+    rng1 = random.Random(123)
+    rng2 = random.Random(123)
     player1 = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng1)
     player2 = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng2)
     move1 = player1.get_move(board)
@@ -232,7 +232,7 @@ def test_cpu_player_restores_board_after_get_move() -> None:
     board = Board()
     board.place_stone(7, 7, CPU_STONE)
     grid_before = copy.deepcopy(board.grid)
-    rng = random.Random(0)  # noqa: S311
+    rng = random.Random(0)
     player = CPUPlayer(stone=CPU_STONE, opponent_stone=HUMAN_STONE, rng=rng)
     player.get_move(board)
     assert board.grid == grid_before

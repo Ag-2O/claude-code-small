@@ -76,6 +76,8 @@ ignore = [
     "D103",    # 公開関数の docstring 省略
     "D104",    # パッケージ docstring の省略
     "INP001",  # __init__.py なしの暗黙名前空間パッケージ
+    "S311",    # テスト用乱数（random.Random(seed)）は暗号目的でないため許容
+    "SLF001",  # テストでの private メンバーアクセスを許容
 ]
 
 [tool.ruff.format]
