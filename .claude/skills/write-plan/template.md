@@ -1,6 +1,6 @@
-# plans.md テンプレート
+# plan.md テンプレート
 
-`.artifacts/features/<feature>/plans.md` を以下の構成で作成する。
+`.artifacts/features/<feature>/plan.md` を以下の構成で作成する。
 
 ```md
 ---
